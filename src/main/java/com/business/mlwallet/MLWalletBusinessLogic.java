@@ -16,6 +16,7 @@ import org.testng.asserts.SoftAssert;
 import java.util.List;
 
 
+
 public class MLWalletBusinessLogic {
 
 	static LoggingUtils logger = new LoggingUtils();
@@ -105,6 +106,14 @@ public class MLWalletBusinessLogic {
 		Thread.sleep(3000);
 		Utilities.type(MLWalletLoginPage.objOtpTextField, OTP, "OTP Text Field");
 	}
+
+	public void backArrowBtn(int nNumber) throws Exception {
+		for (int i = 1; i <= nNumber; i++) {
+			Utilities.click(SendTransferPage.objBackArrow, "Back Arrow Button");
+			Thread.sleep(2000);
+		}
+	}
+
 
 	public void enterMLPin () throws Exception {
 		Utilities.explicitWaitVisible(MLWalletLoginPage.objMLPin,5);
@@ -728,15 +737,6 @@ public class MLWalletBusinessLogic {
 		Utilities.verifyElementPresent(SendTransferPage.objSendMoney, Utilities.getTextVal(SendTransferPage.objSendMoney, "Page"));
 		if (Utilities.verifyElementPresent(SendTransferPage.objToAnyMLBranch, Utilities.getTextVal(SendTransferPage.objToAnyMLBranch, "Button"))) {
 			Utilities.click(SendTransferPage.objToAnyMLBranch, Utilities.getTextVal(SendTransferPage.objToAnyMLBranch, "Button"));
-//			Utilities.explicitWaitVisible(SendTransferPage.objKwartaPadala, 5);
-//			Utilities.verifyElementPresent(SendTransferPage.objKwartaPadala, Utilities.getTextVal(SendTransferPage.objKwartaPadala, "Page"));
-//			Utilities.click(SendTransferPage.objSavedRecipients, Utilities.getTextVal(SendTransferPage.objSavedRecipients, "Button"));
-//			Utilities.explicitWaitVisible(SendTransferPage.objSavedRecipients, 5);
-//			Utilities.click(SendTransferPage.objSavedRecipients, Utilities.getTextVal(SendTransferPage.objSavedRecipients, "Page"));
-//			Thread.sleep(3000);
-//			Utilities.type(SendTransferPage.objSearchRecipient, prop.getproperty("Last_Name"), "Search Recipient Text Field");
-//			Utilities.verifyElementPresent(SendTransferPage.objSelectLastName(prop.getproperty("Last_Name"), prop.getproperty("First_Name")), Utilities.getTextVal(SendTransferPage.objSelectLastName(prop.getproperty("Last_Name"), prop.getproperty("First_Name")), "Recipient"));
-//			Utilities.click(SendTransferPage.objSelectLastName(prop.getproperty("Last_Name"), prop.getproperty("First_Name")), Utilities.getTextVal(SendTransferPage.objSelectLastName(prop.getproperty("Last_Name"), prop.getproperty("First_Name")), "Recipient"));
 			selectSavedRecipient();
 			Utilities.click(SendTransferPage.objEditRecipient, Utilities.getTextVal(SendTransferPage.objEditRecipient, "Button"));
 			Utilities.type(SendTransferPage.objEditRecipientLastName, prop.getproperty("Edited_Last_name"), "Last Name Text Field");
@@ -758,14 +758,6 @@ public class MLWalletBusinessLogic {
 		Utilities.verifyElementPresent(SendTransferPage.objSendMoney, Utilities.getTextVal(SendTransferPage.objSendMoney, "Page"));
 		if (Utilities.verifyElementPresent(SendTransferPage.objToAnyMLBranch, Utilities.getTextVal(SendTransferPage.objToAnyMLBranch, "Button"))) {
 			Utilities.click(SendTransferPage.objToAnyMLBranch, Utilities.getTextVal(SendTransferPage.objToAnyMLBranch, "Button"));
-//			Utilities.explicitWaitVisible(SendTransferPage.objKwartaPadala, 5);
-//			Utilities.verifyElementPresent(SendTransferPage.objKwartaPadala, Utilities.getTextVal(SendTransferPage.objKwartaPadala, "Page"));
-//			Utilities.click(SendTransferPage.objSavedRecipients, Utilities.getTextVal(SendTransferPage.objSavedRecipients, "Button"));
-//			Utilities.explicitWaitVisible(SendTransferPage.objSavedRecipients, 5);
-//			Utilities.click(SendTransferPage.objSavedRecipients, Utilities.getTextVal(SendTransferPage.objSavedRecipients, "Page"));
-//			Utilities.type(SendTransferPage.objSearchRecipient, prop.getproperty("Edited_Last_name"), "Search Recipient Text Field");
-//			Utilities.verifyElementPresent(SendTransferPage.objSelectLastName(prop.getproperty("Edited_Last_name"), prop.getproperty("First_Name")), Utilities.getTextVal(SendTransferPage.objSelectLastName(prop.getproperty("Edited_Last_name"), prop.getproperty("First_Name")), "Recipient"));
-//			Utilities.click(SendTransferPage.objSelectLastName(prop.getproperty("Edited_Last_name"), prop.getproperty("First_Name")), Utilities.getTextVal(SendTransferPage.objSelectLastName(prop.getproperty("Edited_Last_name"), prop.getproperty("First_Name")), "Recipient"));
 			selectSavedRecipient();
 			Utilities.click(SendTransferPage.objDeleteRecipient, Utilities.getTextVal(SendTransferPage.objDeleteRecipient, "Button"));
 			Utilities.verifyElementPresent(SendTransferPage.objPopupMsg, Utilities.getTextVal(SendTransferPage.objPopupMsg, "Pop Up message"));
@@ -1682,6 +1674,163 @@ public class MLWalletBusinessLogic {
 		addSelectedBiller();
 
 	}
+
+
+
+//============================ Settings Module ============================================================//
+//================================Generalized methods=======================================================//
+
+
+	public void navigateToProfile() throws Exception {
+		Utilities.click(MLWalletSettinsPage.objProfileIcon, "Profile Icon");
+		if (Utilities.verifyElementPresent(MLWalletSettinsPage.objAccountDetails, "Account Details Page")) {
+		} else {
+			DriverManager.getAppiumDriver().navigate().back();
+			Utilities.click(MLWalletSettinsPage.objProfileIcon1, "Profile Icon");
+		}
+	}
+//===========================================================================================================//
+	public void accountDetailsValidation_SS_TC_01() throws Exception {
+		ExtentReporter.HeaderChildNode("Account Details validation");
+		mlWalletLogin(prop.getproperty("Branch_Verified"));
+		navigateToProfile();
+		Utilities.click(MLWalletSettinsPage.objAccountDetails, "Account Details");
+		Utilities.verifyElementPresent(MLWalletSettinsPage.objAccountDetails, Utilities.getTextVal(MLWalletSettinsPage.objAccountDetails,"Name"));
+		Utilities.verifyElementPresent(MLWalletSettinsPage.objNameOfAccountHolder,Utilities.getTextVal(MLWalletSettinsPage.objNameOfAccountHolder, "Name"));
+		Utilities.verifyElementPresent(MLWalletSettinsPage.objMailAddressOfAccountHolder,Utilities.getTextVal(MLWalletSettinsPage.objMailAddressOfAccountHolder, "Mail Address"));
+		Utilities.verifyElementPresent(MLWalletSettinsPage.objMobileNoOfAccountHolder,Utilities.getTextVal(MLWalletSettinsPage.objMobileNoOfAccountHolder, "Mobile Number"));
+		logger.info("SS_TC_01, Account Details validated");
+		ExtentReporter.extentLoggerPass("SS_TC_01", "SS_TC_01, Account Details validated");
+		System.out.println("-----------------------------------------------------------");
+	}
+	public void invalidMLPinValidation_SS_TC_03() throws Exception {
+		ExtentReporter.HeaderChildNode("Invalid ML Pin Validation");
+		mlWalletLogin(prop.getproperty("Branch_Verified"));
+		navigateToProfile();
+		Utilities.click(MLWalletSettinsPage.objChangeMLPin, "Change ML Pin");
+		Utilities.verifyElementPresent(MLWalletSettinsPage.objChangeMLPin, "Change ML Pin");
+
+		handleMpin(prop.getproperty("wrongMpin"), "Entered Invalid ML PIN");
+		logger.info(Utilities.getTextVal(MLWalletSettinsPage.objInvalaidMpinPopUp, "Pop up"));
+		ExtentReporter.extentLoggerPass("Invalid Mpin Pop up",
+				Utilities.getTextVal(MLWalletSettinsPage.objInvalaidMpinPopUp, "Pop up"));
+		Utilities.click(MLWalletSettinsPage.objOKBtn, "Ok Button");
+		logger.info("SS_TC_03, Invalid ML PIN validated");
+		ExtentReporter.extentLoggerPass("SS_TC_03", "SS_TC_03, Invalid ML PIN validated");
+		System.out.println("-----------------------------------------------------------");
+	}
+
+
+	public void validMLPinValidation_SS_TC_02() throws Exception {
+		ExtentReporter.HeaderChildNode("Invalid ML Pin Validation");
+		mlWalletLogin(prop.getproperty("Branch_Verified"));
+		navigateToProfile();
+		Utilities.click(MLWalletSettinsPage.objChangeMLPin, "Change ML Pin");
+		Utilities.verifyElementPresent(MLWalletSettinsPage.objChangeMLPin, "Change ML Pin");
+
+		Utilities.waitTime(2000);
+		handleMpin(prop.getproperty("mPin"), "Entered");
+		Utilities.waitTime(2000);
+		if (Utilities.verifyElementPresent(MLWalletSettinsPage.objEnterNewMMLpinText,
+				Utilities.getTextVal(MLWalletSettinsPage.objEnterNewMMLpinText, "Page"))) {
+			Utilities.waitTime(2000);
+			handleMpin(prop.getproperty("newMpin"), "New ML PIN");
+			Utilities.waitTime(2000);
+			handleMpin(prop.getproperty("newMpin"), "Confirmed New ML ");
+			logger.info(Utilities.getTextVal(MLWalletSettinsPage.objMLPinChangedPopup, "Pop Up"));
+			ExtentReporter.extentLoggerPass("ML Pin Changed Pop Up",
+					Utilities.getTextVal(MLWalletSettinsPage.objMLPinChangedPopup, "Pop Up"));
+			Utilities.click(MLWalletSettinsPage.objGotItBtn, "Got It Button");
+		} else if (Utilities.verifyElementPresent(MLWalletSettinsPage.objInvalaidMpinPopUp,
+				Utilities.getTextVal(MLWalletSettinsPage.objInvalaidMpinPopUp, "Pop Up"))) {
+			Utilities.click(MLWalletSettinsPage.objOKBtn, "OK Button");
+			handleMpin(prop.getproperty("newMpin"), "New ML PIN");
+			Utilities.waitTime(2000);
+			handleMpin(prop.getproperty("mPin"), "Confirmed New ML ");
+			Utilities.waitTime(2000);
+			handleMpin(prop.getproperty("mPin"), "Confirmed New ML ");
+			logger.info(Utilities.getTextVal(MLWalletSettinsPage.objMLPinChangedPopup, "Pop Up"));
+			ExtentReporter.extentLoggerPass("ML Pin Changed Pop Up",
+					Utilities.getTextVal(MLWalletSettinsPage.objMLPinChangedPopup, "Pop Up"));
+			Utilities.click(MLWalletSettinsPage.objGotItBtn, "Got It Button");
+		}
+		logger.info("'SS_TC_02' To validate ML PIN validated");
+		ExtentReporter.extentLoggerPass("SS_TC_02", "'SS_TC_02' To validate ML PIN validated");
+
+	}
+
+	public void mlWalletSettingAccRecovery() throws Exception {
+		ExtentReporter.HeaderChildNode("Invalid ML Pin Validation");
+		mlWalletLogin(prop.getproperty("Branch_Verified"));
+		navigateToProfile();
+		Utilities.click(MLWalletSettinsPage.objAccountRecovery, "Account Recovery");
+		Utilities.verifyElementPresent(MLWalletSettinsPage.objMlWalletSupportPage,
+				Utilities.getTextVal(MLWalletSettinsPage.objMlWalletSupportPage, "Page"));
+
+		Utilities.click(MLWalletSettinsPage.objFullNameField, "First Name Field");
+		Utilities.type(MLWalletSettinsPage.objFullNameField, prop.getproperty("firstName"), "First Name Field");
+		Utilities.hideKeyboard();
+
+		Utilities.click(MLWalletSettinsPage.objRegisteredEmail, "Registered Email Field");
+		Utilities.type(MLWalletSettinsPage.objRegisteredEmail, prop.getproperty("eMailAddress"),
+				"Registered Email Field");
+		Utilities.hideKeyboard();
+		Utilities.click(MLWalletSettinsPage.objMobileNumber, "Mobile Number Field");
+		Utilities.type(MLWalletSettinsPage.objMobileNumber, prop.getproperty("Branch_Verified"), "Mobile Number Field");
+		Utilities.hideKeyboard();
+		Utilities.click(MLWalletSettinsPage.objNatureOfReqRadioBtn,
+				Utilities.getTextVal(MLWalletSettinsPage.objNatureOfReqRadioBtn, "Text"));
+		Utilities.scrollToVertical("Next");
+		Utilities.click(MLWalletSettinsPage.objNextBtn, "Next Button");
+		Utilities.verifyElementPresent(MLWalletSettinsPage.objStolenPage,
+				Utilities.getTextVal(MLWalletSettinsPage.objStolenPage, "Page"));
+
+		Utilities.click(MLWalletSettinsPage.objYourAnswer, "Lost/Stolen Mobile Number Field");
+		Utilities.type(MLWalletSettinsPage.objYourAnswer, prop.getproperty("Branch_Verified"),
+				"Lost/Stolen Mobile Number Field");
+		Utilities.hideKeyboard();
+
+		Utilities.click(MLWalletSettinsPage.objNewMobNo, "New Mobile Number Field");
+		Utilities.type(MLWalletSettinsPage.objNewMobNo, prop.getproperty("newMobileNumber"), "New Mobile Number Field");
+		Utilities.hideKeyboard();
+
+		Utilities.click(MLWalletSettinsPage.objFacebookMessangerName, "Facebook Messenger Name Field");
+		Utilities.type(MLWalletSettinsPage.objFacebookMessangerName, prop.getproperty("messangerName"),
+				"Facebook Messenger Name Field");
+		Utilities.hideKeyboard();
+
+		Utilities.scrollToVertical("Submit");
+		Utilities.click(MLWalletSettinsPage.objSumbitBtn, "Submit Button");
+		Utilities.verifyElementPresent(MLWalletSettinsPage.objReviewPage, "Review Page");
+		String actualText = "Please allow us some time to review the details of your request. A customer service representative will contact you for updates and/or to get additional information.";
+		String reviewExpectedText = Utilities.getText(MLWalletSettinsPage.objReviewPage);
+		Utilities.assertionValidation(actualText, reviewExpectedText);
+		logger.info("'SS_TC_05', To verify account recovery validated");
+		ExtentReporter.extentLoggerPass("Account Recovery", "'SS_TC_05', To verify account recovery validated");
+
+	}
+
+	public static void handleMpin(String mPin, String validationText) throws Exception {
+		for (int i = 0; i < mPin.length(); i++) {
+			char ch = mPin.charAt(i);
+			String ch1 = String.valueOf(ch);
+			Utilities.click(MLWalletSettinsPage.objEnterMpinVal(ch1),
+					Utilities.getTextVal(MLWalletSettinsPage.objEnterMpinVal(ch1), "MPIN"));
+		}
+		logger.info(validationText + " MPIN " + mPin + " Successfully");
+		ExtentReporter.extentLogger("Enter MPIN", "" + validationText + " MPIN " + mPin + " Successfully");
+	}
+
+
+
+//=================================== Use QR ======================================================//
+
+
+
+
+
+
+
 }
 
 

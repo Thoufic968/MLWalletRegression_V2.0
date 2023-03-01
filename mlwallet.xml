@@ -28,8 +28,15 @@
 	     <parameter name="portno" value="4723"></parameter>
          <parameter name="deviceName" value="RZ8T20EDQ5W"></parameter>
    		<classes>
-    		<class name="com.mlwallet.regression.MLWalletRegressionScripts" />
-<!--			<class name="com.mlwallet.regression.MLWalletRegressionPayBillsScripts" />-->
+<!--    		<class name="com.mlwallet.regression.MLWalletRegressionScripts" />-->
+			<class name="com.mlwallet.regression.MLWalletCashInViaBankScripts" />
+			<class name="com.mlwallet.regression.MLWalletCashOutWithdrawScripts" />
+			<class name="com.mlwallet.regression.MLWalletSendTransferToAnyMLBranchScripts" />
+			<class name="com.mlwallet.regression.MLWalletSendTransferToMLWalletUserScripts" />
+			<class name="com.mlwallet.regression.MLWalletRegressionPayBillsScripts" />
+			<class name="com.mlwallet.regression.MLWalletSettingScripts" />
+			<class name="com.mlwallet.regression.MLWalletShopItemScripts" />
+			<class name="com.mlwallet.regression.MLWalletTransactionHistory" />
 				<!--<methods>
                       <include name="mlWalletLoginScenario"></include>
                 </methods>-->
